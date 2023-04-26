@@ -1,0 +1,41 @@
+@import "src/styles//variables";
+@font-face {
+  font-family: Mont-Bold;
+  src: url("./fonts/Mont-Bold.otf");
+}
+
+@font-face {
+  font-family: Mont-Regular;
+  src: url("./fonts/Mont-Regular.otf");
+}
+
+@font-face {
+  font-family: Mont-SemiBold;
+  src: url("./fonts/Mont-SemiBold.otf");
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #282525;
+
+  &__content {
+    position: relative; 
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+}
+
+.main {
+  // max-width: 1920px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  // padding: 0 60px;
+  overflow: hidden;
+  // margin: 0 auto;
+}

@@ -1,0 +1,72 @@
+@import "../../styles/mixins";
+@import "../../styles//variables";
+
+.navigation {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  height: 100%;
+
+  &__list {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: 100%;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 32px;
+
+    @include mont-regular;
+    font-size: 17px;
+    line-height: 21px;
+    text-transform: uppercase;
+    color: $text-color;
+    vertical-align: middle;
+    transition: all 0.2s;
+  }
+
+  &__link:hover {
+    color: $text-hover;
+    transition: all 0.2s;
+  }
+
+  &__text-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  // &__text-link--active::after {
+  //   content: "";
+  //   bottom: 0;
+  //   position: absolute;
+  //   box-sizing: border-box;
+  //   width: 100%;
+  //   display: inline-block;
+  //   border-bottom: 2px solid #fff;
+  //   color: #fff;
+  // }
+
+  &__text-link--active {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+  }
+
+  &__text-link--active-footer {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+  }
+}

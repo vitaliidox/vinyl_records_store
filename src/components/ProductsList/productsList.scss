@@ -1,0 +1,27 @@
+@import "../../styles/mixins";
+@import "../../styles//variables";
+
+.products-list {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+
+  &__products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 19px;
+  }
+
+  &__product-item {
+    height: min-content;
+    width: min-content;
+    margin-bottom: 40px;
+  }
+
+  &__product-item > .product-card {
+    height: 445px;
+  }
+}

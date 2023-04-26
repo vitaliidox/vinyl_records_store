@@ -1,0 +1,160 @@
+@import "../../styles/mixins";
+@import "../../styles//variables";
+
+.form {
+  position: relative;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  height: 21px;
+  z-index: 10;
+
+  &__left-buttons {
+    display: flex;
+    height: min-content;
+  }
+
+  &__button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    cursor: pointer;
+    height: 30px;
+    padding: 0 10px;
+    @include mont-regular;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 21px;
+    color: #fff;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+
+  &__button--active {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+
+  &__button:hover {
+    color: $text-hover;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  &__select--numbers {
+    width: 128px;
+  }
+
+  &__selected-option {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    height: 30px;
+    margin-left: auto;
+    margin-right: 24px;
+    padding-left: 12px;
+    @include mont-regular;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 21px;
+    color: #fff;
+    text-transform: uppercase;
+    background-color: transparent;
+  }
+
+  &__selected-option::before{
+    content: "";
+    position: absolute;
+    right: 0;
+    height: 16px;
+    width: 16px;
+    background-image: url("../../components/icons/arrow-disabled.svg");
+    rotate: 180deg;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    
+    // z-index: -1;
+  }
+
+  &__selected-option--active {
+    color: $text-hover;
+  }
+
+  &__selected-option--active::before {
+    rotate: 0deg;
+    background-image: url("../../components/icons/arrow-disabled-hover.svg");
+  }
+
+  &__selected-option:hover::before {
+    background-image: url("../../components/icons/arrow-disabled-hover.svg");
+  }
+
+  &__select--active {
+    outline: none;
+    // border: 1px solid #b4bdc4;
+  }
+
+  // &__select--active:hover {
+  //   border: 1px solid #313237;
+  // }
+
+
+
+  &__selected-option:hover {
+    color: $text-hover;
+    cursor: pointer;
+  }
+
+  &__options-wrapper {
+    position: relative;
+    display: none;;
+    padding: 8px 0;
+    background: #282525;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+  }
+
+  &__options-wrapper::before {
+    content: '';
+    position: absolute;
+    width: 131px;
+    height: 131px;
+    left: -27px;
+    top: -43px;
+    background: #A9343A;
+    filter: blur(125px);
+  }
+
+  &__options-wrapper--active {
+    display: block;
+  }
+
+  &__option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 32px;
+    width: 174px;
+    padding-left: 12px;
+    @include mont-regular;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #f0f0f0;
+    background-color: transparent;
+  }
+
+  &__option:hover {
+    color: $text-hover;
+    cursor: pointer;
+  }
+}
