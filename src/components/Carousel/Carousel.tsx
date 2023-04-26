@@ -6,7 +6,9 @@ import "./carousel.scss";
 import React, { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
-// import { A11y, Autoplay } from 'swiper';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { A11y, Autoplay } from 'swiper';
 
 import { Vinyls } from "../../type/product";
 import { ProductCard } from "../ProductCard";
@@ -81,7 +83,7 @@ export const Carousel: React.FC<Props> = ({
       </div>
 
       <Swiper
-          // modules={[A11y, Autoplay]}
+          modules={[A11y, Autoplay]}
           spaceBetween={20}
           slidesPerGroup={1}
           onSlideChange={handleSlideChange}
