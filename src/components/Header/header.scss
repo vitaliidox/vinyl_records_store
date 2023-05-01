@@ -10,13 +10,15 @@
   flex-direction: row;
   padding: 0 40px;
   box-sizing: border-box;
+  margin-bottom: 30px;
 
   &__items-block {
     display: flex;
     align-items: center;
     flex-direction: row;
     height: 100%;
-    width: 308px;
+    width: 320px;
+    box-sizing: border-box;
   }
 
   &__logo {
@@ -35,6 +37,7 @@
   /*#region Search form*/
   &__search-form {
     display: flex;
+    justify-content: end;
     align-items: center;
     margin-left: auto;
     max-width: 348px;
@@ -44,15 +47,33 @@
     border-radius: 8px;
   }
 
+  @media (max-width: 1420px) {
+    .header__search-form {
+      position: absolute;
+      top: 74px;
+      right: 22px;
+      width: 250px;
+    }
+
+    .header__items-block {
+      width: min-content;
+    }
+  }
+
   &__search-input {
     border: none;
-    width: 100%;
+    width: 0;
     @include mont-regular;
     font-size: 14px;
     line-height: 17px;
     color: #fff;
     background: transparent;
-    display: none;
+    transition: width 0.2s;
+  }
+
+  &__search-input--active {
+    width: 180px;
+    margin-left: 12px;
   }
 
   &__search-input:focus-visible {
@@ -114,24 +135,6 @@
     align-items: center;
     justify-content: center;
   }
-  
-  // &__icon-link:hover::after {
-  //   content: "";
-  //   margin-top: 61px;
-  //   position: absolute;
-  //   width: 100%;
-  //   display: block;
-  //   border-bottom: 3px solid $text-color;
-  // }
-
-  // &__icon-link--active::after {
-  //   content: "";
-  //   margin-top: 61px;
-  //   position: absolute;
-  //   width: 100%;
-  //   display: block;
-  //   border-bottom: 3px solid $text-color;
-  // }
 
   &__icon-link--active &__icon-cart {
     transition: all 0.2s;
@@ -156,3 +159,4 @@
   }
   /*#endregion*/
 }
+

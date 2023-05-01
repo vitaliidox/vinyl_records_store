@@ -10,14 +10,16 @@ export const Breadcrumbs = () => {
   return (
     <article data-cy="breadCrumbs" className="breadcrumb">
       <ul className="breadcrumb__list">
-        {breadcrumbsLinks.map((el, index, arr) => (
-          <li key={`${index + arr.length}`} className="breadcrumb__item">
-           <Link
+        <li className="breadcrumb__item">
+          <Link
             className="breadcrumb__page"
             to="/"
           >
-           Home page /
+            Home page/
           </Link>
+        </li>
+        {breadcrumbsLinks.map((el, index, arr) => (
+          <li key={`${index + arr.length}`} className="breadcrumb__item">
             {arr.length >= 1 && index === arr.length - 1 ? (
               <p className="breadcrumb__page breadcrumb__page--light">
                 {el}
@@ -27,7 +29,7 @@ export const Breadcrumbs = () => {
                 to={`/${el.toLowerCase()}`}
                 className="breadcrumb__page"
               >
-                {el}
+                {el}/
               </Link>
             )}
           </li>

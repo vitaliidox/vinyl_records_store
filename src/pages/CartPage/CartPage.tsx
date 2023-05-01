@@ -1,30 +1,39 @@
 import './cartPage.scss';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
+import { getCartList } from
+'../../components/interactionLocaleStorage/interactionLocaleStorage';
 import { CartList } from '../../components/CartList';
-// import { getCartList } from
-//   '../../components/interactionLocaleStorage/interactionLocaleStorage';
+import { CartListBig } from '../../components/CartListBig';
+import { Carousel } from '../../components/Carousel';
+import { Loader } from '../../components/Loader';
+import { Breadcrumbs } from '../../components/Breadcrumbs';
 
-import { Product } from '../../type/product';
+import { Vinyls } from '../../type/product';
 
-export const CartPage = () => {
-  const [products] = useState<Product[] | null>(null);
+type Props = {
+  productsVinyl: Vinyls[],
+}
+
+export const CartPage: React.FC<Props> = ({ productsVinyl }) => {
+  const [products, setProducts] = useState<Vinyls[] | null>(null);
   const [totalCost, setTotalCost] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   const [checkout, setCheckout] = useState(false);
 
-  // useEffect(() => {
-  //   getCartList(setProducts);
+  console.log(totalItems)
 
-  //   window.addEventListener('storage', () => {
-  //     getCartList(setProducts);
-  //   });
+  useEffect(() => {
+    getCartList(setProducts);
 
-  //   return () => window.removeEventListener('storage', () => {
-  //     getCartList(setProducts);
-  //   });
-  // }, [window.localStorage]);
+    window.addEventListener('storage', () => {
+      getCartList(setProducts);
+    });
+
+    return () => window.removeEventListener('storage', () => {
+      getCartList(setProducts);
+    });
+  }, []);
 
   useEffect(() => {
     const message = setTimeout(() => {
@@ -34,31 +43,31 @@ export const CartPage = () => {
     return () => clearTimeout(message);
   }, [checkout]);
 
-  return (
+  return products ? (
     <section className="cart">
-      <div className="cart__links-container">
-        <Link to="/phones" className="cart__back-link">
-          <button
-            data-cy="backButton"
-            className="cart__back-button"
-            type="button"
-            aria-label="go back"
-          />
-        </Link>
-
-        <Link to="/phones" className="cart__back-link">
-          Back
-        </Link>
+      <div className="background">
+        <div className="background__circle background__circle--1" />
+        <div className="
+          background__circle
+          background__circle--2
+          background__circle--2-cart
+        " />
+        <div className="
+          background__circle
+          background__circle--3
+          background__circle--3-cart
+        " />
       </div>
 
-      <h1 className="cart__title">
-        Cart
-      </h1>
+      <Breadcrumbs />
 
       <div className="cart__shop-list">
         <div className="cart__products">
+          <h3 className="cart__title">
+            Your ordering items:
+          </h3>
           {products && products.length > 0 ? (
-            <CartList
+            <CartListBig
               products={products}
               setTotalCost={setTotalCost}
               setTotalItems={setTotalItems}
@@ -71,20 +80,32 @@ export const CartPage = () => {
         </div>
 
         <div className="cart__checkout-wrapper">
-          <div className="cart__total-price">
-            {`$${totalCost}`}
+          <h3 className="cart__title">
+            Order summary:
+          </h3>
+            {products && products.length > 0 ? (
+              <CartList products={products} />
+            ) : (
+              <h3 className="cart__title-empty">
+                Your cart is empty
+              </h3>
+            )}
+          <div className="cart__wrapper-total">
+            <div className="cart__total-price">
+              Total:
+            </div>
+            <div className="cart__underline"/>
+            <div className="cart__total-price">
+              {`${totalCost} UAH`}
+            </div>
           </div>
-
-          <p className="cart__total-products">
-            {`Total for ${totalItems} items`}
-          </p>
 
           <button
             className="cart__checkout-button"
             type="button"
             onClick={() => setCheckout(true)}
           >
-            Checkout
+            Continue ordering
           </button>
 
           {checkout && (
@@ -94,6 +115,14 @@ export const CartPage = () => {
           )}
         </div>
       </div>
+
+      <Carousel
+        data={productsVinyl}
+        title="Popular Items"
+        linkTo="/catalog?filter=Popular"
+      />
     </section>
+  ) : (
+    <Loader />
   );
 };

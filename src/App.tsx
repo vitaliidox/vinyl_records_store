@@ -5,7 +5,7 @@ import {
   Navigate,
   Route,
   Routes,
-  useLocation,
+  // useLocation,
 } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -26,43 +26,34 @@ import { ToPage } from './type/types';
 
 const App = () => {
   const [products, setProducts] = useState<Vinyls[]>([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  const [isActive, setIsActive] = useState<string>('/');
-  const location = useLocation();
+  const [isLoading, setIsLoading] = useState(false);
+  // const [isActive, setIsActive] = useState<string>('');
+  // const location = useLocation();
   
   const setProductsList = () => {
-    // setIsLoading(true);
+    setIsLoading(true);
 
     getProducts()
-      .then(data => setProducts(data));
-      // .finally(() => setIsLoading(false));
+      .then(data => {
+        console.log('server', data)
+        setProducts(data)
+      })
+      .finally(() => setIsLoading(false));
   };
 
-  const setActiveNav = useCallback(() => {
-    const pathName = location.pathname.substring(1);
-    setIsActive(pathName);
-   
-  }, [location.pathname]);
 
-  const pageUp = () => {
+  const handlerPageMoveUp = useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, []);
 
   useEffect(() => {
     setProductsList();
   }, []);
 
-  useEffect(() => {
-    setActiveNav();
-  }, [location.pathname])
-
   return (
     <div className="page">
       <div className="page__content">
-      <Header
-        isActive={isActive}
-        setIsActive={setIsActive}
-      />
+      <Header />
 
       <main className="main">
         <Routes>
@@ -71,15 +62,13 @@ const App = () => {
             element={<Navigate to="/" />}
           />
 
-          <Route
-            path="/"
-            element={
-              <HomePage
-                // isLoading={isLoading}
-                products={vinyls || []}
-              />
-            }
-          />
+          <Route path="/">
+            <Route index element={<HomePage isLoading={isLoading} products={vinyls || []} /> }/>
+            <Route
+              path=":productId"
+              element={<ProductDetails products={products} />}
+            />
+          </Route>
 
           <Route path="/catalog">
             <Route index element={<Catalog toPage={ToPage.All} />} />
@@ -105,11 +94,22 @@ const App = () => {
             />
           </Route>
 
-          <Route
-            path="/cart"
-            element={<CartPage />}
-          />
+          <Route path="/popular">
+          <Route index element={<Catalog toPage={ToPage.Popular} />} />
+            <Route
+              path=":productId"
+              element={<ProductDetails products={products} />}
+            />
+          </Route>
 
+          <Route path="/cart">
+            <Route index element={<CartPage productsVinyl={products} />} />
+            <Route
+              path=":productId"
+              element={<ProductDetails products={products} />}
+            />
+          </Route>
+     
           <Route
             path="*"
             element={<NotFound />}
@@ -117,11 +117,7 @@ const App = () => {
         </Routes>
       </main>
 
-      <Footer
-        pageUp={pageUp}
-        isActive={isActive}
-        setIsActive={setIsActive}
-      />
+      <Footer pageUp={handlerPageMoveUp} />
       </div>
     </div>
   );

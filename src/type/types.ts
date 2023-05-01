@@ -44,4 +44,5 @@ export enum ToPage {
   All = "All",
   NewRelease = "New release",
   BestSales = "Best sales",
+  Popular = "Popular"
 }

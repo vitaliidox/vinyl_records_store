@@ -3,7 +3,7 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/autoplay';
 import "./carousel.scss";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -25,50 +25,52 @@ export const Carousel: React.FC<Props> = ({
   linkTo,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [swiperParams, setSwiperParams] = useState({
+    slidesPerView: 5,
+  });
 
   const handleSlideChange = useCallback((swiper: any) => {
     setActiveIndex(swiper.activeIndex);
   }, [activeIndex]);
 
 
-  const [swiperParams, setSwiperParams] = React.useState({
-    slidesPerView: 5,
-  });
+  const handleResize = useCallback(() => {
+    if (window.innerWidth < 800) {
+     setSwiperParams({
+       ...swiperParams,
+       slidesPerView: 1,
+     });
+   } else if (window.innerWidth < 1100) {
+     setSwiperParams({
+       ...swiperParams,
+       slidesPerView: 2,
+     });
+   } else if (window.innerWidth < 1440) {
+     setSwiperParams({
+       ...swiperParams,
+       slidesPerView: 3,
+     });
+   } else if (window.innerWidth < 1700) {
+     setSwiperParams({
+       ...swiperParams,
+       slidesPerView: 4,
+     });
+   } else {
+     setSwiperParams({
+       ...swiperParams,
+       slidesPerView: 5,
+     });
+   }
+ }, []);
 
-  React.useEffect(() => {
-    const handleResize = () => {
-       if (window.innerWidth < 800) {
-        setSwiperParams({
-          ...swiperParams,
-          slidesPerView: 1,
-        });
-      } else if (window.innerWidth < 1100) {
-        setSwiperParams({
-          ...swiperParams,
-          slidesPerView: 2,
-        });
-      } else if (window.innerWidth < 1440) {
-        setSwiperParams({
-          ...swiperParams,
-          slidesPerView: 3,
-        });
-      } else if (window.innerWidth < 1630) {
-        setSwiperParams({
-          ...swiperParams,
-          slidesPerView: 4,
-        });
-      } else {
-        setSwiperParams({
-          ...swiperParams,
-          slidesPerView: 5,
-        });
-      }
-    };
 
+  useEffect(() => {
+
+    handleResize();
     window.addEventListener('resize', handleResize);
 
     return () => window.removeEventListener('resize', handleResize);
-  }, [swiperParams]);
+  }, []);
 
   return (
     <div className="swiper-block">

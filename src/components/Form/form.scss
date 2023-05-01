@@ -22,7 +22,8 @@
     background: transparent;
     cursor: pointer;
     height: 30px;
-    padding: 0 10px;
+    // padding-right: 10px;
+    margin-right: 36px;
     @include mont-regular;
     font-weight: 600;
     font-size: 17px;
@@ -79,8 +80,6 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    
-    // z-index: -1;
   }
 
   &__selected-option--active {
@@ -98,14 +97,7 @@
 
   &__select--active {
     outline: none;
-    // border: 1px solid #b4bdc4;
   }
-
-  // &__select--active:hover {
-  //   border: 1px solid #313237;
-  // }
-
-
 
   &__selected-option:hover {
     color: $text-hover;
@@ -114,13 +106,14 @@
 
   &__options-wrapper {
     position: relative;
-    display: none;;
-    padding: 8px 0;
+    display: none;
     background: #282525;
     border: 1px solid #fff;
     border-radius: 8px;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
     overflow: hidden;
+    width: 244px;
+    height: 174px;
   }
 
   &__options-wrapper::before {
@@ -135,7 +128,9 @@
   }
 
   &__options-wrapper--active {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
   }
 
   &__option {
@@ -143,11 +138,11 @@
     display: flex;
     align-items: center;
     height: 32px;
-    width: 174px;
-    padding-left: 12px;
+    padding-left: 16px;
     @include mont-regular;
-    font-weight: 500;
-    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 17px;
     line-height: 21px;
     color: #f0f0f0;
     background-color: transparent;

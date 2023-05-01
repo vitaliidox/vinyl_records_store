@@ -1,8 +1,8 @@
 import './catalog.scss';
-import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-
 import circleArrow from '../../components/icons/circle-arrow.svg';
+
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { Form } from '../../components/Form';
@@ -11,13 +11,13 @@ import { ProductsList } from '../../components/ProductsList';
 import { SearchList } from '../../components/SearchList';
 import { 
   buttonsFilter, 
-  // getProducts,
+  getProducts,
 } from '../../helpers/getProducts';
 
 import { TypeProduct, Vinyls } from '../../type/product';
 import { Loader } from '../../components/Loader';
-import vinyls from '../../helpers/vinyls.json';
-import { Sort, ToPage } from '../../type/types';
+// import vinyls from '../../helpers/vinyls.json';
+import { Filter, Sort, ToPage } from '../../type/types';
 
 type Props = {
   toPage: ToPage,
@@ -25,55 +25,56 @@ type Props = {
 
 export const Catalog: React.FC<Props> = ({ toPage }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  // const [vinyls, setPhones] = useState<Vinyls[]>([]);
-  const [isLoading] = useState(false);
+  const [vinyls, setVinyls] = useState<Vinyls[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [filteredProd, setFilteredProd] = useState<Vinyls[]>([])
-  const [filter, setFilter] = useState<string | null>(null);
-  
-  console.log(filteredProd, 'dddeeerr');
+  const [filter, setFilter] = useState<string | null>(searchParams.get('filter'));
+
   const getQuerySearchParam = useCallback(() => {
     return searchParams.get('query');
-  }, [searchParams, location]);
+  }, [searchParams]);
+
+  const getFIlter = useCallback(() => {
+    setFilter(searchParams.get('filter'));
+  }, [searchParams])
 
   const getFilteredProducts = useCallback(() => {
-    if (!filter || filter === "All") {
+    if (!filter) {
       setFilteredProd(vinyls);
-      searchParams.delete('filter');
-      setSearchParams(searchParams);
 
       return;
     }
 
-    const productsArray = [...vinyls].filter((item) => item.genre === filter);
+    const productsArray = [...vinyls].filter((item) => {
+      if (filter === Filter.All) {
+        return true;
+      }
+      return item.genre === filter
+    });
     searchParams.set('filter', filter);
     setSearchParams(searchParams);
     setFilteredProd(productsArray);
-  },[filter, location])
+  },[filter, searchParams, setSearchParams, vinyls])
 
-  const handlerSetFilter = useCallback((el: string) => {
-    setFilter(el)
-  },[filter, location])
+  const handlerSetFilter = useCallback((arg: string) => {
+    setFilter(arg)
+  },[])
 
-  // useMemo(() => {
-    // setIsLoading(true);
-    // setPhones(vinyls)
-    // getProducts()
-    //   .then(data => {
-    //     // const filteredData = data.filter((item: Vinyls) => (
-    //     //   item.type === TypeProduct.Phone));
+  useMemo(() => {
+    setIsLoading(true);
 
-    //     setPhones(data);
-    //   })
-    //   .finally(() => setIsLoading(false));
-  // }, []);
+    getProducts()
+      .then(data => setVinyls(data))
+      .finally(() => setIsLoading(false));
+  }, []);
 
-  // useEffect(() => {
-  //   setPhones(vinyls);
-  // }, [])
+  useEffect(() => {
+    getFIlter()
+  }, [getFIlter])
 
   useEffect(() => {
     getFilteredProducts();
-  }, [filter, location])
+  }, [filter, location, vinyls])
 
   useEffect(() => {
     switch (toPage) {
@@ -85,13 +86,15 @@ export const Catalog: React.FC<Props> = ({ toPage }) => {
         searchParams.set('sort', Sort.BestSales);
         setSearchParams(searchParams);
         return;
+      case ToPage.Popular:
+        searchParams.set('filter', Filter.Popular);
+        setSearchParams(searchParams);
+        return;
       default:
         return
     }
  
   }, [toPage])
-
-  console.log(filter, 'ddddd')
 
   return !getQuerySearchParam() ? (
     <section className="vinyls">
@@ -135,7 +138,7 @@ export const Catalog: React.FC<Props> = ({ toPage }) => {
         <Form />
       </div>
     
-      {!isLoading ? (
+      {!isLoading && vinyls.length > 0 ? (
         <>
           {vinyls.length > 0 ? (
             <ProductsList

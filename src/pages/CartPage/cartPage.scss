@@ -2,7 +2,8 @@
 @import "../../styles//variables";
 
 .cart {
-  @include page-styles;
+  padding: 0 60px;
+  background-color: transparent;
 
   &__message {
     display: flex;
@@ -25,11 +26,11 @@
     margin-bottom: 16px;
   }
 
-  &__products {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  &__products .products-list__products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: space-between;
+    column-gap: 19px;
   }
 
   &__title-empty {
@@ -88,30 +89,49 @@
   /*#endregion Links back */
 
   &__title {
+    text-align: start;
+    margin-bottom: 36px;
     @include title;
+    font-size: 36px;
+    line-height: 46px;
   }
 
   &__shop-list {
     display: flex;
+    justify-content: space-between;
+    gap: 20px;
   }
 
   &__checkout-wrapper {
     position: relative;
-    padding: 24px;
-    height: 206px;
-    width: 368px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    border: 1px solid #e2e6e9;
+    align-items: start;
+    width: 538px;
+    box-sizing: border-box;
+  }
+
+  &__wrapper-total {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 55px;
+  }
+
+  &__underline {
+    display: block;
+    flex: 1 0;
+    max-width: 100%;
+    border-bottom: 2px dashed $text-color;
+    margin: 0 16px 8px;
     box-sizing: border-box;
   }
 
   &__total-price {
-    @include mont-bold;
-    font-size: 32px;
-    line-height: 41px;
-    letter-spacing: -0.01em;
+    @include mont-regular;
+    font-size: 28px;
+    line-height: 34px;
+    text-transform: uppercase;
     color: $text-color;
   }
 
@@ -126,17 +146,54 @@
   }
 
   &__checkout-button {
-    height: 48px;
-    width: 320px;
-    background: #313237;
-    @include mont-semi-bold;
-    font-size: 14px;
+    position: relative;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 53px;
+    width: 227px;
+    background: #fff;
+    border-radius: 4px;
+
+    @include mont-regular;
+    font-weight: 600;
+    font-size: 17px;
     line-height: 21px;
-    text-align: center;
-    color: #fff;
+    text-transform: uppercase;
+    color: #282525;
+    transition: all 0.3s;
+  }
+
+  &__checkout-button:after {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    content: '';
+    height: 54px;
+    width: 227px;
+    border: 3px solid #fff;
+    border-radius: 4px;
+    transition: all 0.3s;
+    box-sizing: border-box;
   }
 
   &__checkout-button:hover {
-    cursor: pointer;
+    background: #853034;
+    color: #fff;
+    transition: all 0.3s;
+  }
+
+  &__checkout-button:hover::after {
+    border: 3px solid #853034;
+    color: #fff;
+  }
+
+  &__checkout-button:active {
+    background: #672427;
+  }
+
+  &__checkout-button:active::after {
+    border: 3px solid #672427;
   }
 }

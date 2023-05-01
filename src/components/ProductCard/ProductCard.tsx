@@ -52,8 +52,8 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
       data-cy="cardsContainer"
       className="product-card"
     >
-      {/* <Link to={`/${type}s/${product.id}`}> */}
-      <Link to='/'>
+      <Link to={`${product.id}`}>
+      {/* <Link to='/'> */}
         <div className="product-card__image-wrapper">
           <img
             className="product-card__image"

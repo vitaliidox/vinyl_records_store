@@ -2,15 +2,14 @@
 @import "../../styles//variables";
 
 .product-details {
-  @include page-styles;
-  margin-bottom: 0;
-
-  &__buttons-container {
-    display: flex;
-    height: 16px;
-    width: 66px;
-    margin-bottom: 16px;
-  }
+  width: 100%;
+  padding: 0 59px;
+  margin: 0 auto;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  background: transparent;
+  box-sizing: border-box;
 
   &__wrapper-info {
     margin: auto;

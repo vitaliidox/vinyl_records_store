@@ -9,6 +9,7 @@
   flex-grow: 1;
   flex-direction: column;
   background: transparent;
+  box-sizing: border-box;
 
   &__title-block {
     height: 466px;
@@ -57,13 +58,10 @@
   }
 }
 
-
-
 .background__circle-arrow--page {
-  left: 970px;
+  left: 65%;
   rotate: 30deg;
 }
-
 
 .background__circle--page {
   right: -340px;

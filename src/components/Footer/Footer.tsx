@@ -1,5 +1,5 @@
 import './footer.scss';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../logo/Vinyl_store.svg';
 import { HashLink } from 'react-router-hash-link';
@@ -9,16 +9,31 @@ import { Path } from '../../type/types';
 
 type Props = {
   pageUp: () => void,
-  isActive: string,
-  setIsActive: (arg: string) => void,
+  // isActive: string,
+  // setIsActive: (arg: string) => void,
 };
 
 export const Footer: React.FC<Props> = ({
   pageUp,
-  isActive,
-  setIsActive,
+  // isActive,
+  // setIsActive,
 }) => {
   const location = useLocation();
+  const navLink = useRef('');
+
+  const focus = useCallback((arg: Path | string) => {
+    navLink.current = arg;
+  }, []);
+
+  const getCurrengPage = useCallback(() => {
+    const pathName = location.pathname.substring(1);
+
+    focus(pathName);
+  }, [focus, location.pathname])
+
+  useEffect(() => {
+    getCurrengPage();
+  }, [getCurrengPage])
 
   useEffect(() => {
     pageUp();
@@ -39,14 +54,14 @@ export const Footer: React.FC<Props> = ({
         <li className="navigation__item">
           <Link
            className={classNames('navigation__link',
-           { 'navigation__link--active': isActive.includes(Path.Catalog) })}
+           { 'navigation__link--active': navLink.current.includes(Path.Catalog) })}
             to="/catalog"
-            onClick={() => setIsActive(Path.Catalog)}
+            onClick={() => focus(Path.Catalog)}
           >
             <p className={classNames('navigation__text-link',
               {
                 'navigation__text-link--active-footer':
-                  isActive.includes(Path.Catalog),
+                navLink.current.includes(Path.Catalog),
               })}
             >
               Catalog
@@ -57,14 +72,14 @@ export const Footer: React.FC<Props> = ({
         <li className="navigation__item">
           <Link
             className={classNames('navigation__link',
-              { 'navigation__link--active': isActive.includes(Path.NewRealises) })}
+              { 'navigation__link--active': navLink.current.includes(Path.NewRealises) })}
             to="/new-releases"
-            onClick={() => setIsActive(Path.NewRealises)}
+            onClick={() => focus(Path.NewRealises)}
           >
             <p className={classNames('navigation__text-link',
               {
                 'navigation__text-link--active-footer':
-                  isActive.includes(Path.NewRealises),
+                navLink.current.includes(Path.NewRealises),
               })}
             >
               New release
@@ -88,15 +103,15 @@ export const Footer: React.FC<Props> = ({
             className={classNames('navigation__link',
               {
                 'navigation__link--active':
-                isActive.includes(Path.BestSales),
+                navLink.current.includes(Path.BestSales),
               })}
             to="/best-sales"
-            onClick={() => setIsActive(Path.BestSales)}
+            onClick={() => focus(Path.BestSales)}
           >
             <p className={classNames('navigation__text-link',
               {
                 'navigation__text-link--active-footer':
-                  isActive.includes(Path.BestSales),
+                navLink.current.includes(Path.BestSales),
               })}
             >
               Best Sales

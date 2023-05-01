@@ -36,13 +36,14 @@
 }
 
 .background {
-  z-index: -2;
+  z-index: -1;
 
   &__circle {
     position: absolute;
     width: 437px;
     height: 437px;
     filter: blur(125px);
+    z-index: -1;
   
     &--1 {
       left: -12%;
@@ -55,6 +56,17 @@
       top: 224px;
       background: #A9343A;
     }
+
+    &--2 {
+      right: 0;
+      top: 224px;
+      background: #A9343A;
+    }
+
+    &--2-cart {
+      right: -15%;
+      top: 50%;
+    }
   
     &--3 {
       left: -12%;
@@ -62,6 +74,10 @@
       width: 394px;
       height: 394px;
       background: #A9343A;
+    }
+
+    &--3-cart {
+      top: 95%;
     }
   
     &--4 {

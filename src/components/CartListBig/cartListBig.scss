@@ -1,0 +1,49 @@
+@import "../../styles/mixins";
+@import "../../styles//variables";
+
+.cart-list-big {
+  width: 998px;
+  display: flex;
+  justify-content: start;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  &__item {
+    position: relative;
+  }
+
+  &__button-delete {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    background-image: url('../../components/icons/trash.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 2;
+    top: 0;
+  }
+
+  &__button-delete:hover {
+    background-image: url('../../components/icons/trash-hover.svg');
+  }
+}
+
+@media (max-width: 1676px) {
+  .cart-list-big {
+    width: 652px;
+  }
+}
+
+@media (max-width: 1350px) {
+  .cart-list-big {
+    width: 326px;
+  }
+}
+
+
+
+
+
+

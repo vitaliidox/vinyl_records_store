@@ -3,9 +3,60 @@
 
 .detiled-description {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 80px;
+  align-items: start;
+  margin-bottom: 180px;
   width: 100%;
+
+  &__songs-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10%;
+
+    width: 100%;
+    justify-content: space-between;
+    text-align: start;
+    @include mont-regular;
+    font-size: 17px;
+    line-height: 21px;
+    color: $text-color;
+  }
+
+  &__info-table {
+    width: 420px;
+  }
+
+  &__info-table > tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    @include mont-regular;
+    font-size: 17px;
+    line-height: 21px;
+  }
+
+  &__info-items {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    text-align: left;
+  }
+
+  &__info-title {
+    width: 60%;
+    color: #828282;
+  }
+
+  &__info {
+    width: 40%;
+    color: $text-color;
+  }
+
+  &__songs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    width: 50%;
+  }
 
   /*#region About */
   &__about {
@@ -17,7 +68,13 @@
   }
 
   &__title-about {
-    margin-bottom: 48px;
+    text-align: left;
+    @include mont-semi-bold;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 46px;
+    color: $text-color;
+    margin-bottom: 36px;
   }
 
   &__title-description {
@@ -39,12 +96,20 @@
   /*#endregion About */
 
   /*#region Tech specs */
-  &__tech-specs {
-    width: 512px;
+  &__tracks-wrapper {
+    // width: 546px;
+    width: max-content;
+    margin-left: 180px;
   }
 
-  &__title-tech-specs {
-    margin-bottom: 41px;
+  &__title-tracks {
+    @include mont-semi-bold;
+    font-weight: 546;
+    font-size: 36px;
+    line-height: 46px;
+    color: $text-color;
+    margin-bottom: 36px;
+    text-align: left;
   }
 
   &__tech-specs-table {

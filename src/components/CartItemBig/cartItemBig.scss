@@ -1,0 +1,44 @@
+@import "../../styles/mixins";
+@import "../../styles//variables";
+
+.cart-item-big {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 316px;
+  height: 466px;
+  box-sizing: border-box;
+  margin-bottom: 240px;
+
+  &__delete {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 24px;
+    width: 24px;
+    background-color: transparent;
+    background-image: url("../icons/trash.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  &__delete:hover {
+    background-image: url("../icons/trash-hover.svg");
+  }
+}
+
+.cart-item-big > .product-card {
+  height: 466px;
+}
+
+.cart-item-big >
+.product-card >
+.product-card__main-info {
+  height: 100%;
+}
+
+.cart-item-big:not(:last-of-type) {
+  margin-bottom: 40px;
+}
+

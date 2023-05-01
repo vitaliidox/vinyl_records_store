@@ -21,35 +21,34 @@ export const Form = () => {
     setIsActive(argument);
   }, [isActive]);
 
-  console.log(sorted)
   const setSortedMethod = useCallback((method: string | null) => {
     setSorted(method);
-  }, [location])
+  }, [])
 
   const setFilter = useCallback((argument: 'sort', value: string) => {
     searchParams.set(argument, value);
     setSearchParams(searchParams);
     setIsActiveForm(value);
-  }, [location]);
+  }, [searchParams, setIsActiveForm, setSearchParams]);
 
   const setFilterLeft = useCallback((argument: 'sort', value: string) => {
     setSortedMethod(value);
     searchParams.set(argument, value);
     setSearchParams(searchParams);
     setIsActiveForm(null);
-  },[location]);
+  },[searchParams, setIsActiveForm, setSearchParams, setSortedMethod]);
 
   const getSelectTitle = useCallback(() => {
     return searchParams.get('sort') !== Sort.NewRelease
       && searchParams.get('sort') !== Sort.BestSales
       && searchParams.get('sort') || 'Sort by';
-  },[searchParams, location])
+  },[searchParams])
 
   useEffect(() => {
     const sort = searchParams.get('sort');
 
     setSortedMethod(sort);
-  }, [searchParams, location])
+  }, [searchParams, setSortedMethod])
 
   return (
     <div className="form">

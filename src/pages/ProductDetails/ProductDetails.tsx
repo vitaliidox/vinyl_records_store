@@ -1,11 +1,10 @@
 import './productDetails.scss';
+import circleArrow from '../../components/icons/circle-arrow.svg';
 
 import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 
-import { ProductsSlider } from '../../components/ProductsSlider';
-// import { ProductInfo } from '../../components/ProductInfo';
-// import { DetailedDescription } from '../../components/DetailedDescription';
+import { ProductInfo } from '../../components/ProductInfo';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { NoResults } from '../../components/NoResults';
 import { getDetails } from '../../helpers/getProducts';
@@ -13,6 +12,8 @@ import { getDetails } from '../../helpers/getProducts';
 import { Vinyls } from '../../type/product';
 import { Details } from '../../type/details';
 import { Loader } from '../../components/Loader';
+import { Carousel } from '../../components/Carousel';
+import { DetailedDescription } from '../../components/DetailedDescription';
 
 type Props = {
   products: Vinyls[],
@@ -24,11 +25,13 @@ export const ProductDetails: React.FC<Props> = ({ products }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [generalData, setGeneralData] = useState<Vinyls | null>(null);
 
+  console.log('details', details)
+
   const getDetailsData = useCallback(() => {
     setIsLoading(true);
 
     getDetails(productId)
-      .then(data => setDetails({ ...data, color: ['black', 'silver', 'red'] }))
+      .then(data => setDetails(data))
       .catch(() => setDetails(null))
       .finally(() => setIsLoading(false));
   }, [productId]);
@@ -55,44 +58,42 @@ export const ProductDetails: React.FC<Props> = ({ products }) => {
 
   return (
     <section className="product-details">
+      <div className="background">
+        <div className="background__circle background__circle--1" />
+        <div
+          className="
+            background__circle
+            background__circle--2
+            background__circle--page
+          "
+        />
+        <div className="background__circle background__circle--7" />
+
+        <img
+          className="background__circle-arrow background__circle-arrow--page"
+          src={circleArrow}
+          alt="circle-arrow"
+        />
+      </div>
       {!isLoading ? (
         <>
           <Breadcrumbs />
 
-          <div className="product-details__buttons-container">
-            <button
-              data-cy="backButton"
-              className="product-details__button"
-              type="button"
-              aria-label="go back"
-              onClick={() => window.history.back()}
-            />
-
-            <button
-              type="button"
-              className="product-details__back-button"
-              onClick={() => window.history.back()}
-            >
-              Back
-            </button>
-          </div>
-
           {details && generalData && (
             <>
-              {/* <ProductInfo
+              <ProductInfo
                 generalData={generalData}
                 details={details}
               />
 
               <DetailedDescription
-                generalData={generalData}
                 details={details}
-              /> */}
+              />
 
-              <ProductsSlider
-                isLoading={isLoading}
-                products={products}
-                title="You may also like"
+              <Carousel
+                data={products}
+                title="Popular Items"
+                linkTo="/catalog?filter=Popular"
               />
             </>
           )}

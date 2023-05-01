@@ -1,25 +1,32 @@
 /* eslint-disable max-len */
 import './detailedDescription.scss';
 import { Details } from '../../type/details';
-import { Product } from '../../type/product';
 
 type Props = {
   details: Details,
-  generalData: Product,
 };
 
-export const DetailedDescription: React.FC<Props> = ({ details, generalData }) => {
-  const { snippet } = generalData;
+export const DetailedDescription: React.FC<Props> = ({ details }) => {
   const {
-    battery,
-    camera,
-    connectivity,
-    description,
-    display,
-    hardware,
-    sizeAndWeight,
-    storage,
+    id,
+    genre,
+    year,
+    country,
+    label,
+    songs,
+    format,
   } = details;
+
+  let numberA = 0;
+  let numberB = 0;
+
+  const infoArray = [
+    ["Format", format],
+    ["Genre", genre],
+    ["Release Date", year],
+    ["Label", label],
+    ["Country", country],
+  ]
 
   return (
     <section className="detiled-description">
@@ -27,64 +34,53 @@ export const DetailedDescription: React.FC<Props> = ({ details, generalData }) =
         data-cy="productDescription"
         className="detiled-description__about"
       >
-        <h3 className="detiled-description__title-about title">
-          About
+        <h3 className="detiled-description__title-about">
+          Product information:
         </h3>
 
-        <div className="detiled-description__about-block">
-          <div>
-            <h4 className="detiled-description__title-description">
-              {snippet}
-            </h4>
-
-            <p className="detiled-description__text">
-              {description}
-            </p>
-          </div>
-        </div>
+      <table className="detiled-description__info-table">
+        <tbody>
+          {infoArray.map((item) => (
+            <tr
+              key={item[0] + id}
+              className="detiled-description__info-items"
+            >
+              <th className="detiled-description__info-title">
+                {item[0]}
+              </th>
+              <td className="detiled-description__info">
+                {item[1]}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       </section>
 
-      <section className="detiled-description__tech-specs">
-        <h3 className="detiled-description__title-tech-specs title">
-          Tech specs
+      <section className="detiled-description__tracks-wrapper">
+        <h3 className="detiled-description__title-tracks">
+          Track list:
         </h3>
 
-        <table className="detiled-description__tech-specs-table">
-          <tbody>
-            <tr>
-              <td>Screen</td>
-              <td>{display.screenSize || '-'}</td>
-            </tr>
-            <tr>
-              <td>Resolution</td>
-              <td>{display.screenResolution || '-'}</td>
-            </tr>
-            <tr>
-              <td>Processor</td>
-              <td>{hardware.cpu || '-'}</td>
-            </tr>
-            <tr>
-              <td>RAM</td>
-              <td>{storage.ram || '-'}</td>
-            </tr>
-            <tr>
-              <td>Battery</td>
-              <td>{battery.type || '-'}</td>
-            </tr>
-            <tr>
-              <td>Camera</td>
-              <td>{camera.primary || '-'}</td>
-            </tr>
-            <tr>
-              <td>Weight</td>
-              <td>{sizeAndWeight.weight || '-'}</td>
-            </tr>
-            <tr>
-              <td>Cell</td>
-              <td>{connectivity.cell || '-'}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="detiled-description__songs-wrapper">
+          <ul className="detiled-description__songs-list">
+            {songs.map((song, index, array) => {
+              return index < Math.ceil(array.length/2) ? (
+                <li key={song.id} className="detiled-description__song">
+                  {`A${++numberA}. ` + song.title}
+                </li>
+              ) : ('')})}
+          </ul>
+
+          <ul className="detiled-description__songs-list">
+            {songs.map((song, index, array) => {
+              return index >= Math.ceil(array.length/2) ? (
+                <li key={song.id} className="detiled-description__song">
+                  {`B${++numberB}. ` + song.title}
+                </li>
+              ) : ('')})}
+          </ul>
+        </div>
       </section>
     </section>
   );

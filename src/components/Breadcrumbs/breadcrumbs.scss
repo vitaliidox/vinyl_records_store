@@ -25,10 +25,7 @@
   &__item {
     display: flex;
     align-items: center;
-  }
-
-  &__item:not(:last-of-type) {
-    margin-right: 13px;
+    text-align: start;
   }
 
   &__img-arrow {

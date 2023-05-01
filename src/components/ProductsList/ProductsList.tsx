@@ -62,7 +62,7 @@ export const ProductsList: React.FC<Props> = ({
     productsList: Vinyls[],
   ) => {
     const page = +(searchParams.get('page') || 1);
-    const productsNumber: number = 16;
+    const productsNumber = 16;
     const idStart = (page - 1) * productsNumber;
     let productsPerPage: Vinyls[] = [];
 

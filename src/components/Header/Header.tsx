@@ -10,15 +10,15 @@ import { Navigation } from '../Navigation';
 import { Product } from '../../type/product';
 import { Path } from '../../type/types';
 
-type Props = {
-  isActive: string,
-  setIsActive: (arg: string) => void,
-}
+// type Props = {
+//   isActive: string,
+//   setIsActive: (arg: string) => void,
+// }
 
-export const Header: React.FC<Props> = ({
-  isActive,
-  setIsActive,
-}) => {
+export const Header = (
+  // isActive,
+  // setIsActive,
+) => {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [cartList, setCartList] = useState<Product[] | null>(null);
@@ -66,9 +66,9 @@ export const Header: React.FC<Props> = ({
     setQuery('');
   }, []);
   
-  const setInputStyle = useCallback(() => (
-    inputVisible ? {display: 'block', marginLeft: '12px'} : {display: 'none'}
-  ), [inputVisible]);
+  // const setInputStyle = useCallback(() => (
+  //   inputVisible ? {display: 'block', marginLeft: '12px'} : {display: 'none'}
+  // ), [inputVisible]);
 
   useEffect(() => {
     setInputVisible(false);
@@ -104,7 +104,7 @@ export const Header: React.FC<Props> = ({
         <Link
           to="/"
           className="header__link-logo"
-          onClick={() => setIsActive(Path.Home)}
+          // onClick={() => setIsActive(Path.Home)}
         >
           <img
             className="header__logo"
@@ -116,8 +116,8 @@ export const Header: React.FC<Props> = ({
   
 
       <Navigation
-          isActive={isActive}
-          setIsActive={setIsActive}
+          // isActive={isActive}
+          // setIsActive={setIsActive}
         />
 
       <div className="header__items-block">
@@ -132,9 +132,8 @@ export const Header: React.FC<Props> = ({
 
           <input
             ref={inputRef}
-            style={setInputStyle()}
             type="text"
-            className="header__search-input"
+            className={classNames("header__search-input", {"header__search-input--active": inputVisible})}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />
@@ -142,9 +141,9 @@ export const Header: React.FC<Props> = ({
 
         <Link
           to="cart"
-          className={classNames('header__icon-link',
-            { 'header__icon-link--active': isActive === Path.Cart })}
-          onClick={() => setIsActive(Path.Cart)}
+          // className={classNames('header__icon-link',
+          //   { 'header__icon-link--active': isActive === Path.Cart })}
+          // onClick={() => setIsActive(Path.Cart)}
         >
           <div className="header__icon-cart">
             {cartList && cartList.length > 0 && (

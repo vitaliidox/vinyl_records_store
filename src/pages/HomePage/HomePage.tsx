@@ -13,16 +13,17 @@ import vinyls from '../../helpers/vinyls.json';
 
 import { Vinyls } from '../../type/product';
 import whoWeAre from '../../img/who-we-are.png';
+import { Loader } from '../../components/Loader';
 // import { CarouselBest } from '../../components/CarouselBest';
 
 // import { getProducts } from '../../helpers/getProducts';
 
 type Props = {
   products: Vinyls[],
-  // isLoading: boolean,
+  isLoading: boolean,
 };
 
-export const HomePage: React.FC<Props> = ({ products }) => {
+export const HomePage: React.FC<Props> = ({ products, isLoading }) => {
   const [searchParams] = useSearchParams();
   const [vinylsList, setVinylsList] = useState<Vinyls[]>([]);
   // const [activeIndex, setActiveIndex] = useState(0);
@@ -97,12 +98,16 @@ export const HomePage: React.FC<Props> = ({ products }) => {
 
       <Discover />
 
-      <Carousel
-        title={'New releases'}
-        linkTo={"/new-releases"}
-        data={vinylsList}
-      />
-
+        {!isLoading ? (
+          <Carousel
+            title={'New releases'}
+            linkTo={"/new-releases"}
+            data={vinylsList}
+          />
+        ) : (
+          <Loader />
+        )}
+    
       <article id="who-we-are" className="about-us">
         <div className="about-us__left-block">
           <div className="about-us__img-wrapper">
@@ -158,13 +163,16 @@ export const HomePage: React.FC<Props> = ({ products }) => {
         </div>
       </article>
 
-      <Carousel
-        title={'New releases'}
-        linkTo={"/new-releases"}
-        data={getHotPrice()}
-      />
-   /
-      {/* <CarouselBest data={getHotPrice()} /> */}
+      {!isLoading ? (
+        <Carousel
+          title={'Best sales'}
+          linkTo={"/best-sales"}
+          data={getHotPrice()}
+        />
+      ) : (
+        <Loader />
+      )}
+
 
       <div className="home__locate-wrapper">
         <article className="home__locate">
